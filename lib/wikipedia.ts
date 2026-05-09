@@ -34,3 +34,12 @@ export async function fetchWikipediaContent(title: string): Promise<string> {
   }
   return data.parse.text['*'];
 }
+
+export async function searchWikipedia(query: string): Promise<string[]> {
+  if (!query.trim()) return [];
+  const url = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(query)}&limit=5&namespace=0&format=json&origin=*`;
+  const response = await fetch(url);
+  if (!response.ok) return [];
+  const data = await response.json();
+  return data[1] || []; // Index 1 contains the titles
+}

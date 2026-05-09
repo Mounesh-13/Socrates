@@ -31,11 +31,11 @@ export function RelatedTopics({ topics }: RelatedTopicsProps) {
               href={`/topic/${encodeURIComponent(topic.toLowerCase().replace(/ /g, "-"))}`}
               className="group relative block"
             >
-              <div className="absolute inset-0 bg-white/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative flex items-center justify-between p-8 rounded-2xl bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:border-white/30 group-hover:-translate-y-1 transition-all">
+              <div className="absolute inset-0 bg-primary/5 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative flex items-center justify-between p-8 rounded-2xl bg-white/5 border border-white/10 group-hover:bg-white/10 group-hover:border-primary/30 group-hover:-translate-y-1 transition-all">
                 <span className="text-xl font-bold tracking-tight">{topic}</span>
-                <div className="p-2 rounded-full bg-white/0 group-hover:bg-white/10 transition-colors">
-                  <ArrowRight className="w-6 h-6 transform group-hover:translate-x-1 transition-transform" />
+                <div className="p-2 rounded-full bg-white/0 group-hover:bg-primary/10 transition-colors">
+                  <ArrowRight className="w-6 h-6 transform group-hover:translate-x-1 transition-transform group-hover:text-primary" />
                 </div>
               </div>
             </Link>

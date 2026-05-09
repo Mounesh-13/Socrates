@@ -11,7 +11,7 @@ interface CalloutBlockProps {
 }
 
 const intentStyles = {
-  info: "bg-blue-500/10 border-blue-500/20 text-blue-400",
+  info: "bg-primary/10 border-primary/20 text-primary",
   warning: "bg-amber-500/10 border-amber-500/20 text-amber-400",
   success: "bg-emerald-500/10 border-emerald-500/20 text-emerald-400",
 };

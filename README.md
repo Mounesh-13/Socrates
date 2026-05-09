@@ -14,6 +14,7 @@ Unlike traditional educational tools that follow a rigid layout, Socrates operat
 - **AI-Generated Layouts:** Real-time synthesis of UI schemas based on Wikipedia content.
 - **Interactive Socrates Dialogue:** A **CopilotKit** powered sidebar that remembers everything on the page and answers complex questions.
 - **Experience Remixing:** Ask Socrates to "Explain like I'm 5" or "Deep dive for an expert," and the entire UI re-architects itself instantly.
+- **Neural Palettes:** The AI generates custom color schemes for every topic, ensuring the visual "mood" matches the subject matter.
 - **Neural Navigation:** Tell Socrates to "Show me the quiz" or "Go to the timeline," and the UI will automatically scroll you to the right section.
 - **Universal Translation:** Instantly re-synthesize the entire educational experience into any language.
 

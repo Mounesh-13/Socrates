@@ -1,17 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
+import { searchWikipedia } from "@/lib/wikipedia";
 
 export default function LandingPage() {
   const [query, setQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [showSuggestions, setShowSuggestions] = useState(false);
   const [recent, setRecent] = useState<string[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(async () => {
+      if (query.trim().length > 2) {
+        const results = await searchWikipedia(query);
+        setSuggestions(results);
+        setShowSuggestions(true);
+      } else {
+        setSuggestions([]);
+        setShowSuggestions(false);
+      }
+    }, 300);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [query]);
 
   useEffect(() => {
     const history = localStorage.getItem("socrates_history");
@@ -130,9 +148,41 @@ export default function LandingPage() {
           <Input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onFocus={() => query.trim().length > 2 && setShowSuggestions(true)}
             placeholder="Paste Wikipedia URL or Topic"
             className="w-full h-16 bg-white/5 border-white/10 rounded-2xl px-8 text-lg focus:bg-white/10 focus:border-white/20 transition-all placeholder:opacity-30"
           />
+
+          <AnimatePresence>
+            {showSuggestions && suggestions.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                className="absolute top-[110%] left-0 right-0 z-50 bg-black/80 border border-white/10 rounded-2xl backdrop-blur-2xl overflow-hidden shadow-2xl"
+              >
+                {suggestions.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => {
+                      setQuery(s);
+                      setShowSuggestions(false);
+                      router.push(`/topic/${encodeURIComponent(s.toLowerCase().replace(/ /g, "-"))}`);
+                    }}
+                    className="w-full text-left px-8 py-4 hover:bg-purple-500/10 transition-colors flex items-center justify-between group"
+                  >
+                    <div className="flex items-center space-x-3">
+                      <Sparkles className="w-3 h-3 text-purple-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                      <span className="text-sm font-medium">{s}</span>
+                    </div>
+                    <div className="text-[10px] font-mono opacity-20 group-hover:opacity-100 transition-opacity uppercase tracking-tighter">Architect Select</div>
+                  </button>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <Button
             type="submit"
             size="icon"

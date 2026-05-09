@@ -25,11 +25,14 @@ export function ConceptGrid({ items }: ConceptGridProps) {
               transition={{ delay: index * 0.05 }}
               viewport={{ once: true }}
               whileHover={{ y: -5 }}
+              className="group"
             >
-              <Card className="h-full bg-white/5 border-white/10 backdrop-blur-sm overflow-hidden hover:bg-white/10 transition-colors">
+              <Card className="h-full bg-white/5 border-white/10 backdrop-blur-sm overflow-hidden hover:bg-white/10 hover:border-primary/50 transition-all duration-500 rounded-2xl">
                 <CardHeader>
-                  <IconComponent className="w-8 h-8 mb-4 opacity-70" />
-                  <CardTitle className="text-xl font-bold">{item.title}</CardTitle>
+                  <div className="p-3 rounded-xl bg-primary/10 w-fit group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-500 mb-2">
+                    <IconComponent className="w-6 h-6" />
+                  </div>
+                  <CardTitle className="text-xl font-bold group-hover:text-primary transition-colors">{item.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-sm opacity-70 leading-relaxed">

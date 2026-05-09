@@ -12,13 +12,13 @@ interface HeroBlockProps {
 }
 
 const themeStyles: Record<Theme, string> = {
-  cosmic: "bg-slate-950 text-purple-100",
-  "parchment-dark": "bg-stone-900 text-amber-100",
-  cinematic: "bg-black text-white",
-  "neon-performance": "bg-zinc-950 text-cyan-400",
-  futuristic: "bg-gray-900 text-emerald-400",
+  cosmic: "bg-slate-950",
+  "parchment-dark": "bg-stone-900",
+  cinematic: "bg-black",
+  "neon-performance": "bg-zinc-950",
+  futuristic: "bg-gray-900",
   "paper-minimal": "bg-white text-black",
-  brutalist: "bg-orange-500 text-black",
+  brutalist: "bg-orange-500",
 };
 
 export function HeroBlock({ title, subtitle, theme, imageUrl }: HeroBlockProps) {
@@ -56,12 +56,15 @@ export function HeroBlock({ title, subtitle, theme, imageUrl }: HeroBlockProps) 
         className="text-center z-10"
       >
         <h1 className={cn(
-          "text-6xl md:text-8xl font-bold tracking-tighter mb-4",
+          "text-6xl md:text-8xl font-bold tracking-tighter mb-4 text-primary",
           theme === "paper-minimal" ? "font-serif" : theme === "brutalist" ? "font-mono uppercase italic border-4 border-black p-4 bg-white" : "font-sans"
         )}>
           {title}
         </h1>
-        <p className="text-xl md:text-2xl opacity-80 max-w-2xl mx-auto leading-relaxed">
+        <p className={cn(
+          "text-xl md:text-2xl opacity-80 max-w-2xl mx-auto leading-relaxed",
+          theme === "brutalist" ? "font-mono bg-black text-white p-2 mt-4" : "text-foreground"
+        )}>
           {subtitle}
         </p>
       </motion.div>

@@ -28,6 +28,11 @@ export interface GlossaryItem {
   definition: string;
 }
 
+export interface Perspective {
+  title: string;
+  points: string[];
+}
+
 export type ComponentData = 
   | { type: 'hero'; title: string; subtitle: string; theme: Theme; imageUrl?: string }
   | { type: 'timeline'; events: TimelineEvent[] }
@@ -38,11 +43,17 @@ export type ComponentData =
   | { type: 'callout'; title: string; text: string; intent?: 'info' | 'warning' | 'success' }
   | { type: 'stats_grid'; items: { label: string; value: string }[] }
   | { type: 'glossary'; items: GlossaryItem[] }
+  | { type: 'perspectives'; left: Perspective; right: Perspective }
   | { type: 'related_topics'; topics: string[] };
 
 export interface UISchema {
   topic: string;
   theme: Theme;
+  palette?: {
+    primary: string;
+    secondary: string;
+    accent: string;
+  };
   components: ComponentData[];
   architectNotes?: string;
 }

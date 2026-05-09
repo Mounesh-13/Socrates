@@ -10,6 +10,7 @@ import { QuoteBlock } from "./QuoteBlock";
 import { CalloutBlock } from "./CalloutBlock";
 import { StatsGrid } from "./StatsGrid";
 import { GlossaryBlock } from "./GlossaryBlock";
+import { PerspectivesBlock } from "./PerspectivesBlock";
 import { RelatedTopics } from "./RelatedTopics";
 
 const componentMap: Record<string, React.ComponentType<any>> = {
@@ -22,6 +23,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   callout: CalloutBlock,
   stats_grid: StatsGrid,
   glossary: GlossaryBlock,
+  perspectives: PerspectivesBlock,
   related_topics: RelatedTopics,
 };
 
@@ -31,8 +33,17 @@ interface DynamicRendererProps {
 }
 
 export function DynamicRenderer({ schema, onMasteryUpdate }: DynamicRendererProps) {
+  const dynamicStyles = schema.palette ? {
+    '--primary': schema.palette.primary,
+    '--secondary': schema.palette.secondary,
+    '--accent': schema.palette.accent,
+  } as React.CSSProperties : {};
+
   return (
-    <div className={`min-h-screen experience-theme-${schema.theme}`}>
+    <div 
+      className={`min-h-screen experience-theme-${schema.theme}`}
+      style={dynamicStyles}
+    >
       {schema.components.map((component, index) => {
         const Component = componentMap[component.type];
         if (!Component) return null;

@@ -95,11 +95,31 @@ function TopicContent({
 }) {
   const [schema, setSchema] = useState<UISchema | null>(initialSchema);
   const [showDebug, setShowDebug] = useState(false);
+  const [showHub, setShowHub] = useState(false);
   const [mastery, setMastery] = useState(0);
 
   useEffect(() => {
     setSchema(initialSchema);
   }, [initialSchema]);
+
+  const HubButton = ({ icon: Icon, label, onClick, color }: any) => (
+    <motion.div 
+      initial={{ opacity: 0, scale: 0.8, x: 20 }}
+      animate={{ opacity: 1, scale: 1, x: 0 }}
+      exit={{ opacity: 0, scale: 0.8, x: 20 }}
+      className="flex items-center space-x-3 group"
+    >
+      <span className="bg-black/80 px-3 py-1.5 rounded-lg border border-white/10 text-[10px] font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+        {label}
+      </span>
+      <button 
+        onClick={onClick}
+        className={`p-3 rounded-full border border-white/10 text-white shadow-xl hover:scale-110 transition-all ${color}`}
+      >
+        <Icon className="w-5 h-5" />
+      </button>
+    </motion.div>
+  );
 
   useCopilotReadable({
     description: "The currently displayed Wikipedia content for the topic.",
@@ -256,6 +276,50 @@ function TopicContent({
 
   return (
     <main className="bg-black text-white selection:bg-white selection:text-black relative">
+      {/* Neural Hub - Floating Action Menu */}
+      <div className="fixed bottom-8 right-8 z-[70] flex flex-col items-end space-y-4">
+        <AnimatePresence>
+          {showHub && (
+            <div className="flex flex-col items-end space-y-3 mb-2">
+              <HubButton 
+                icon={Sparkles} 
+                label="Remix Experience" 
+                onClick={() => onRemix("Explain it differently")} 
+                color="bg-purple-600"
+              />
+              <HubButton 
+                icon={Languages} 
+                label="Translate" 
+                onClick={() => onRemix("Translate to Spanish")} 
+                color="bg-blue-600"
+              />
+              <HubButton 
+                icon={Bookmark} 
+                label="Save Library" 
+                onClick={() => {
+                  const topic = schema?.topic || "";
+                  const saved = localStorage.getItem("socrates_favorites");
+                  const favorites = saved ? JSON.parse(saved) : [];
+                  if (!favorites.includes(topic)) {
+                    localStorage.setItem("socrates_favorites", JSON.stringify([topic, ...favorites]));
+                    alert("Saved to Personal Library!");
+                  }
+                }} 
+                color="bg-emerald-600"
+              />
+            </div>
+          )}
+        </AnimatePresence>
+        <button 
+          onClick={() => setShowHub(!showHub)}
+          className={`p-5 rounded-full shadow-2xl transition-all duration-500 group ${
+            showHub ? "bg-white text-black rotate-45" : "bg-purple-600 text-white hover:scale-110"
+          }`}
+        >
+          <Zap className="w-6 h-6 group-hover:animate-pulse" />
+        </button>
+      </div>
+
       <div className="fixed top-0 left-0 right-0 h-1 z-[60] pointer-events-none">
         <motion.div 
           initial={{ width: 0 }}

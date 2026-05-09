@@ -25,6 +25,7 @@ Available components:
 - callout: { type: 'callout', title: string, text: string, intent?: 'info' | 'warning' | 'success' }
 - stats_grid: { type: 'stats_grid', items: { label: string, value: string }[] }
 - glossary: { type: 'glossary', items: { term: string, definition: string }[] }
+- perspectives: { type: 'perspectives', left: { title: string, points: string[] }, right: { title: string, points: string[] } } // Use for dualities, comparisons (e.g., 'Pros vs Cons', 'Legacy vs Reality', 'Theory A vs Theory B')
 - related_topics: { type: 'related_topics', topics: string[] }
 
 Themes:
@@ -42,12 +43,14 @@ For each topic:
 - choose ordering
 - choose theme
 - generate concise educational content
+- provide 'palette': { primary, secondary, accent } in HEX format. Choose colors that give the topic a unique and appropriate "vibe". Ensure readability.
 - provide 'architectNotes': a brief (1-2 sentence) technical rationale for your design choices.
 
 Structure your response as follows:
 {
   "topic": "Topic Name",
   "theme": "chosen-theme",
+  "palette": { "primary": "#...", "secondary": "#...", "accent": "#..." },
   "architectNotes": "...",
   "components": [
     { "type": "hero", ... },

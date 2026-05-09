@@ -21,6 +21,7 @@ Complete the "Socrates" Generative UI prototype for the Hackathon with advanced 
     - **Quotes:** Implemented cinematic blockquotes with large decorative icons.
     - **Callouts:** Added thematic informational/warning boxes (Info, Warning, Success).
     - **Stats Grid:** Created a grid for rapid factual summaries.
+- **Neural Palettes:** Enabled AI-generated color palettes (Primary, Secondary, Accent) that allow the UI to physically adapt its mood to the topic.
 - **Visual & Polish Upgrades:**
     - **Background Grid:** Added a subtle architectural grid pattern with radial masking to the landing page.
     - **Dynamic Hero Images:** Integrated Wikipedia thumbnail fetching into the `HeroBlock` with cinematic overlays.
