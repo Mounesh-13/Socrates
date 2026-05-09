@@ -27,6 +27,7 @@ Available components:
 - glossary: { type: 'glossary', items: { term: string, definition: string }[] }
 - perspectives: { type: 'perspectives', left: { title: string, points: string[] }, right: { title: string, points: string[] } } // Use for dualities, comparisons (e.g., 'Pros vs Cons', 'Legacy vs Reality', 'Theory A vs Theory B')
 - knowledge_graph: { type: 'knowledge_graph', nodes: { id: string, label: string, type: 'concept'|'person'|'event'|'place' }[], edges: { from: string, to: string, label?: string }[] } // Visualize relationships. Always make the main topic the first node (id: 'root').
+- pathway: { type: 'pathway', items: { step: string, title: string, description: string }[] } // Suggest a 3-step structured learning journey for the user to follow.
 - related_topics: { type: 'related_topics', topics: string[] }
 
 Themes:

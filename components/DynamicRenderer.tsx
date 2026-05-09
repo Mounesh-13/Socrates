@@ -12,6 +12,7 @@ import { StatsGrid } from "./StatsGrid";
 import { GlossaryBlock } from "./GlossaryBlock";
 import { PerspectivesBlock } from "./PerspectivesBlock";
 import { KnowledgeGraph } from "./KnowledgeGraph";
+import { PathwayBlock } from "./PathwayBlock";
 import { RelatedTopics } from "./RelatedTopics";
 
 const componentMap: Record<string, React.ComponentType<any>> = {
@@ -26,6 +27,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   glossary: GlossaryBlock,
   perspectives: PerspectivesBlock,
   knowledge_graph: KnowledgeGraph,
+  pathway: PathwayBlock,
   related_topics: RelatedTopics,
 };
 

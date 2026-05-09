@@ -45,6 +45,12 @@ export interface KnowledgeEdge {
   label?: string;
 }
 
+export interface PathwayItem {
+  step: string;
+  title: string;
+  description: string;
+}
+
 export type ComponentData = 
   | { type: 'hero'; title: string; subtitle: string; theme: Theme; imageUrl?: string }
   | { type: 'timeline'; events: TimelineEvent[] }
@@ -57,6 +63,7 @@ export type ComponentData =
   | { type: 'glossary'; items: GlossaryItem[] }
   | { type: 'perspectives'; left: Perspective; right: Perspective }
   | { type: 'knowledge_graph'; nodes: KnowledgeNode[]; edges: KnowledgeEdge[] }
+  | { type: 'pathway'; items: PathwayItem[] }
   | { type: 'related_topics'; topics: string[] };
 
 export interface UISchema {
