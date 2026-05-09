@@ -57,10 +57,19 @@ export interface MediaItem {
   url: string; // The embed URL or ID
   title?: string;
 }
+export interface KnowledgeEdge {
+  from: string;
+  to: string;
+  label?: string;
+}
 
-export interface ChartData {
-  label: string;
-  value: number;
+export interface TopicDNA {
+  complexity: number; // 0-100
+  impact: number;
+  history: number;
+  controversy: number;
+  science: number;
+  arts: number;
 }
 
 export type ComponentData = 
@@ -78,6 +87,7 @@ export type ComponentData =
   | { type: 'pathway'; items: PathwayItem[] }
   | { type: 'media'; items: MediaItem[] }
   | { type: 'chart'; title: string; chartType: 'bar' | 'area'; data: ChartData[] }
+  | { type: 'topic_dna'; dna: TopicDNA }
   | { type: 'related_topics'; topics: string[] };
 
 export interface UISchema {

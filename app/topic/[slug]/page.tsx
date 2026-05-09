@@ -12,7 +12,7 @@ import { CopilotKit, useCopilotReadable, useCopilotAction } from "@copilotkit/re
 import { CopilotSidebar } from "@copilotkit/react-ui";
 import { stripHtml } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { Share2, Bookmark, Languages, Sparkles, Zap, Mic, MicOff, RefreshCw, Twitter } from "lucide-react";
+import { Share2, Bookmark, Languages, Sparkles, Zap, Mic, MicOff, RefreshCw, Twitter, Trophy } from "lucide-react";
 import "@copilotkit/react-ui/styles.css";
 
 export default function TopicPage() {
@@ -99,6 +99,22 @@ function TopicContent({
   const [showHub, setShowHub] = useState(false);
   const [isNarrating, setIsNarrating] = useState(false);
   const [mastery, setMastery] = useState(0);
+  const [hasCelebrated, setHasCelebrated] = useState(false);
+
+  useEffect(() => {
+    if (mastery >= 100 && !hasCelebrated) {
+      setHasCelebrated(true);
+      const saved = localStorage.getItem("socrates_favorites");
+      if (saved && schema) {
+        const favorites = JSON.parse(saved);
+        const updated = favorites.map((f: any) => 
+          f.topic === schema.topic ? { ...f, mastered: true } : f
+        );
+        localStorage.setItem("socrates_favorites", JSON.stringify(updated));
+      }
+      speak("Congratulations, Scholar. You have achieved full mastery of this topic.");
+    }
+  }, [mastery]);
 
   useEffect(() => {
     setSchema(initialSchema);

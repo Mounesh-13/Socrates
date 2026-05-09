@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Search, Sparkles } from "lucide-react";
+import { Search, Sparkles, Trophy } from "lucide-react";
 import { searchWikipedia } from "@/lib/wikipedia";
 
 export default function LandingPage() {
@@ -242,9 +242,17 @@ export default function LandingPage() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
                     <div className="absolute bottom-6 left-6 right-6">
-                      <div className="flex items-center space-x-2 mb-2">
-                        <div className="w-2 h-2 rounded-full shadow-[0_0_8px_currentColor]" style={{ backgroundColor: item.palette?.primary, color: item.palette?.primary }} />
-                        <span className="text-[10px] font-mono opacity-50 uppercase tracking-widest">Saved Experience</span>
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-2 h-2 rounded-full shadow-[0_0_8px_currentColor]" style={{ backgroundColor: item.palette?.primary, color: item.palette?.primary }} />
+                          <span className="text-[10px] font-mono opacity-50 uppercase tracking-widest">Saved Experience</span>
+                        </div>
+                        {item.mastered && (
+                          <div className="flex items-center space-x-1 text-emerald-400">
+                             <Trophy className="w-3 h-3" />
+                             <span className="text-[8px] font-bold uppercase tracking-tighter">Mastered</span>
+                          </div>
+                        )}
                       </div>
                       <h3 className="text-xl font-bold tracking-tight">{item.topic}</h3>
                     </div>

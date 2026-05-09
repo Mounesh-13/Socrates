@@ -30,6 +30,7 @@ Available components:
 - pathway: { type: 'pathway', items: { step: string, title: string, description: string }[] } // Suggest a 3-step structured learning journey for the user to follow.
 - media: { type: 'media', items: { type: 'video'|'audio', provider: 'youtube'|'spotify', url: string, title?: string }[] } // Embed educational videos (YouTube ID) or music/podcasts (Spotify ID).
 - chart: { type: 'chart', title: string, chartType: 'bar'|'area', data: { label: string, value: number }[] } // Visualize quantitative data (e.g., dates/values, properties/amounts). Use 'area' for trends, 'bar' for comparisons.
+- topic_dna: { type: 'topic_dna', dna: { complexity: number, impact: number, history: number, controversy: number, science: number, arts: number } } // A multi-dimensional radar chart analysis of the topic's essence (0-100 values).
 - related_topics: { type: 'related_topics', topics: string[] }
 
 Themes:
