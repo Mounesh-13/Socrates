@@ -7,11 +7,12 @@ import { generateUISchema } from "@/lib/generateSchema";
 import { UISchema, Theme } from "@/types/schema";
 import { DynamicRenderer } from "@/components/DynamicRenderer";
 import { LoadingExperience } from "@/components/LoadingExperience";
+import { NeuralBackground } from "@/components/NeuralBackground";
 import { CopilotKit, useCopilotReadable, useCopilotAction } from "@copilotkit/react-core";
 import { CopilotSidebar } from "@copilotkit/react-ui";
 import { stripHtml } from "@/lib/utils";
-import { motion } from "framer-motion";
-import { Share2, Bookmark } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Share2, Bookmark, Languages, Sparkles, Zap, Mic, MicOff } from "lucide-react";
 import "@copilotkit/react-ui/styles.css";
 
 export default function TopicPage() {
@@ -35,9 +36,9 @@ export default function TopicPage() {
           fetchWikipediaSummary(topic).catch(() => null)
         ]);
         wikipediaContent = c;
-        wikiSummary = s;
+        wikiSummary = s as any;
         setContent(c);
-        setSummary(s);
+        setSummary(s as any);
       }
 
       const imageUrl = wikiSummary?.thumbnail?.source;
@@ -96,11 +97,28 @@ function TopicContent({
   const [schema, setSchema] = useState<UISchema | null>(initialSchema);
   const [showDebug, setShowDebug] = useState(false);
   const [showHub, setShowHub] = useState(false);
+  const [isNarrating, setIsNarrating] = useState(false);
   const [mastery, setMastery] = useState(0);
 
   useEffect(() => {
     setSchema(initialSchema);
   }, [initialSchema]);
+
+  const speak = (text: string) => {
+    if (!isNarrating) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 0.95;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  useEffect(() => {
+    if (isNarrating && schema) {
+      speak(`Entering the world of ${schema.topic}. Experience theme: ${schema.theme}. ${schema.architectNotes || ""}`);
+    } else {
+      window.speechSynthesis.cancel();
+    }
+  }, [isNarrating]);
 
   const HubButton = ({ icon: Icon, label, onClick, color }: any) => (
     <motion.div 
@@ -172,7 +190,7 @@ function TopicContent({
       {
         name: "lens",
         type: "string",
-        description: "The educational lens (e.g., 'Explain like I'm 5', 'Expert Academic', 'Poetic')",
+        description: "The educational lens (e.g., 'EL5', 'Expert Academic', 'Poetic')",
         required: true,
       },
     ],
@@ -207,7 +225,7 @@ function TopicContent({
       {
         name: "language",
         type: "string",
-        description: "The target language (e.g., 'Spanish', 'French', 'Japanese', 'Hindi')",
+        description: "The target language (e.g., 'Spanish', 'French', 'Hindi')",
         required: true,
       },
     ],
@@ -276,6 +294,8 @@ function TopicContent({
 
   return (
     <main className="bg-black text-white selection:bg-white selection:text-black relative">
+      <NeuralBackground color={schema.palette?.primary} />
+      
       {/* Neural Hub - Floating Action Menu */}
       <div className="fixed bottom-8 right-8 z-[70] flex flex-col items-end space-y-4">
         <AnimatePresence>
@@ -297,11 +317,16 @@ function TopicContent({
                 icon={Bookmark} 
                 label="Save Library" 
                 onClick={() => {
-                  const topic = schema?.topic || "";
+                  const topicData = {
+                    topic: schema.topic,
+                    palette: schema.palette,
+                    image: wikiUrl.includes('wikipedia') ? null : undefined, // simplify for now or handle summary in props
+                    slug: window.location.pathname.split('/').pop()
+                  };
                   const saved = localStorage.getItem("socrates_favorites");
                   const favorites = saved ? JSON.parse(saved) : [];
-                  if (!favorites.includes(topic)) {
-                    localStorage.setItem("socrates_favorites", JSON.stringify([topic, ...favorites]));
+                  if (!favorites.find((f:any) => f.topic === schema.topic)) {
+                    localStorage.setItem("socrates_favorites", JSON.stringify([topicData, ...favorites]));
                     alert("Saved to Personal Library!");
                   }
                 }} 
@@ -343,36 +368,20 @@ function TopicContent({
         >
           {showDebug ? "Hide Schema" : "Neural Trace"}
         </button>
+        <button 
+          onClick={() => setIsNarrating(!isNarrating)}
+          className={`p-2 border rounded-full backdrop-blur-md transition-all ${
+            isNarrating ? "bg-red-500/20 border-red-500/40 text-red-400 opacity-100" : "bg-white/5 border-white/10 text-white/40 hover:opacity-100"
+          }`}
+          title="Narrator Mode"
+        >
+          {isNarrating ? <Mic className="w-4 h-4" /> : <MicOff className="w-4 h-4" />}
+        </button>
         {mastery > 0 && (
           <div className="px-3 py-1 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[10px] font-mono text-emerald-400 animate-in fade-in zoom-in duration-500">
             MASTERY: {Math.round(mastery)}%
           </div>
         )}
-        <button 
-          onClick={() => {
-            if (!schema) return;
-            const topicData = {
-              topic: schema.topic,
-              palette: schema.palette,
-              image: summary?.thumbnail?.source,
-              slug: slug
-            };
-            const saved = localStorage.getItem("socrates_favorites");
-            const favorites = saved ? JSON.parse(saved) : [];
-            const exists = favorites.find((f: any) => f.topic === schema.topic);
-
-            if (!exists) {
-              localStorage.setItem("socrates_favorites", JSON.stringify([topicData, ...favorites]));
-              alert("Saved to Personal Library!");
-            } else {
-              alert("Already in your Library.");
-            }
-          }}
-          className="p-2 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white/40 hover:text-white transition-all backdrop-blur-md"
-          title="Save to Library"
-        >
-          <Bookmark className="w-4 h-4" />
-        </button>
         <button 
           onClick={() => {
             navigator.clipboard.writeText(window.location.href);
