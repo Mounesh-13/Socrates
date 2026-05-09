@@ -51,6 +51,13 @@ export interface PathwayItem {
   description: string;
 }
 
+export interface MediaItem {
+  type: 'video' | 'audio';
+  provider: 'youtube' | 'spotify';
+  url: string; // The embed URL or ID
+  title?: string;
+}
+
 export type ComponentData = 
   | { type: 'hero'; title: string; subtitle: string; theme: Theme; imageUrl?: string }
   | { type: 'timeline'; events: TimelineEvent[] }
@@ -64,6 +71,7 @@ export type ComponentData =
   | { type: 'perspectives'; left: Perspective; right: Perspective }
   | { type: 'knowledge_graph'; nodes: KnowledgeNode[]; edges: KnowledgeEdge[] }
   | { type: 'pathway'; items: PathwayItem[] }
+  | { type: 'media'; items: MediaItem[] }
   | { type: 'related_topics'; topics: string[] };
 
 export interface UISchema {
