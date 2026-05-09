@@ -55,8 +55,12 @@ export default function TopicPage() {
         setSummary(s as any);
       }
 
+      // Get context from history (second item as first is current)
+      const history = localStorage.getItem("socrates_history");
+      const contextTopic = history ? JSON.parse(history)[1] : undefined;
+
       const imageUrl = wikiSummary?.thumbnail?.source;
-      const generatedSchema = await generateUISchema(topic, wikipediaContent as string, imageUrl, lens);
+      const generatedSchema = await generateUISchema(topic, wikipediaContent as string, imageUrl, lens, contextTopic);
       setSchema(generatedSchema);
       
       document.title = `${topic} | Socrates`;

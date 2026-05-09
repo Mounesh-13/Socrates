@@ -2,11 +2,12 @@ import { model } from "./gemini";
 import { UI_ARCHITECT_PROMPT } from "../prompts/uiArchitectPrompt";
 import { UISchema } from "../types/schema";
 
-export async function generateUISchema(topic: string, wikipediaContent: string, imageUrl?: string, lens?: string): Promise<UISchema> {
+export async function generateUISchema(topic: string, wikipediaContent: string, imageUrl?: string, lens?: string, contextTopic?: string): Promise<UISchema> {
   const prompt = `
 ${UI_ARCHITECT_PROMPT}
 
 Topic: ${topic}
+${contextTopic ? `CONTEXT TOPIC (Previous Discovery): ${contextTopic}\n(Use this to create a 'neural_bridge' component showing how these two topics connect)` : ""}
 ${imageUrl ? `Main Image URL: ${imageUrl}\n(Use this URL in the 'hero' component's 'imageUrl' field)` : ""}
 ${lens ? `EDUCATIONAL LENS: ${lens}\n(Tailor all content, complexity, and component selection to this lens)` : ""}
 

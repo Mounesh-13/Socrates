@@ -16,6 +16,7 @@ import { PathwayBlock } from "./PathwayBlock";
 import { MediaBlock } from "./MediaBlock";
 import { ChartBlock } from "./ChartBlock";
 import { TopicDNABlock } from "./TopicDNABlock";
+import { NeuralBridge } from "./NeuralBridge";
 import { RelatedTopics } from "./RelatedTopics";
 
 const componentMap: Record<string, React.ComponentType<any>> = {
@@ -34,6 +35,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   media: MediaBlock,
   chart: ChartBlock,
   topic_dna: TopicDNABlock,
+  neural_bridge: NeuralBridge,
   related_topics: RelatedTopics,
 };
 
