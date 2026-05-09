@@ -26,6 +26,7 @@ Available components:
 - stats_grid: { type: 'stats_grid', items: { label: string, value: string }[] }
 - glossary: { type: 'glossary', items: { term: string, definition: string }[] }
 - perspectives: { type: 'perspectives', left: { title: string, points: string[] }, right: { title: string, points: string[] } } // Use for dualities, comparisons (e.g., 'Pros vs Cons', 'Legacy vs Reality', 'Theory A vs Theory B')
+- knowledge_graph: { type: 'knowledge_graph', nodes: { id: string, label: string, type: 'concept'|'person'|'event'|'place' }[], edges: { from: string, to: string, label?: string }[] } // Visualize relationships. Always make the main topic the first node (id: 'root').
 - related_topics: { type: 'related_topics', topics: string[] }
 
 Themes:

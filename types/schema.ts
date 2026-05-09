@@ -33,6 +33,18 @@ export interface Perspective {
   points: string[];
 }
 
+export interface KnowledgeNode {
+  id: string;
+  label: string;
+  type: 'concept' | 'person' | 'event' | 'place';
+}
+
+export interface KnowledgeEdge {
+  from: string;
+  to: string;
+  label?: string;
+}
+
 export type ComponentData = 
   | { type: 'hero'; title: string; subtitle: string; theme: Theme; imageUrl?: string }
   | { type: 'timeline'; events: TimelineEvent[] }
@@ -44,6 +56,7 @@ export type ComponentData =
   | { type: 'stats_grid'; items: { label: string; value: string }[] }
   | { type: 'glossary'; items: GlossaryItem[] }
   | { type: 'perspectives'; left: Perspective; right: Perspective }
+  | { type: 'knowledge_graph'; nodes: KnowledgeNode[]; edges: KnowledgeEdge[] }
   | { type: 'related_topics'; topics: string[] };
 
 export interface UISchema {

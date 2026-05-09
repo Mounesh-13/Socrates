@@ -11,6 +11,7 @@ import { CalloutBlock } from "./CalloutBlock";
 import { StatsGrid } from "./StatsGrid";
 import { GlossaryBlock } from "./GlossaryBlock";
 import { PerspectivesBlock } from "./PerspectivesBlock";
+import { KnowledgeGraph } from "./KnowledgeGraph";
 import { RelatedTopics } from "./RelatedTopics";
 
 const componentMap: Record<string, React.ComponentType<any>> = {
@@ -24,6 +25,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
   stats_grid: StatsGrid,
   glossary: GlossaryBlock,
   perspectives: PerspectivesBlock,
+  knowledge_graph: KnowledgeGraph,
   related_topics: RelatedTopics,
 };
 
