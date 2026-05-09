@@ -224,18 +224,31 @@ export default function LandingPage() {
           )}
 
           {favorites.length > 0 && (
-            <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200">
-              <div className="text-[10px] font-mono opacity-30 uppercase tracking-[0.2em] mb-6">Personal Library</div>
-              <div className="flex flex-col space-y-2">
-                {favorites.map((topic) => (
-                  <button
-                    key={topic}
-                    onClick={() => router.push(`/topic/${encodeURIComponent(topic.toLowerCase().replace(/ /g, "-"))}`)}
-                    className="w-full text-left px-4 py-3 rounded-xl bg-purple-500/5 border border-purple-500/10 text-sm text-purple-300/60 hover:text-purple-300 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all flex justify-between items-center group"
+            <div className="animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200 col-span-1 md:col-span-2">
+              <div className="text-[10px] font-mono opacity-30 uppercase tracking-[0.2em] mb-8 text-center md:text-left">Your Discovery Gallery</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {favorites.map((item: any) => (
+                  <motion.div
+                    key={item.topic}
+                    whileHover={{ y: -5 }}
+                    onClick={() => router.push(`/topic/${item.slug}`)}
+                    className="relative aspect-video rounded-3xl overflow-hidden cursor-pointer group border border-white/10 shadow-xl"
+                    style={{ borderColor: item.palette?.primary + '40' }}
                   >
-                    <span>{topic}</span>
-                    <div className="w-1.5 h-1.5 bg-purple-500 rounded-full shadow-[0_0_5px_rgba(168,85,247,0.5)]" />
-                  </button>
+                    <img 
+                      src={item.image || "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800"} 
+                      alt={item.topic}
+                      className="w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <div className="w-2 h-2 rounded-full shadow-[0_0_8px_currentColor]" style={{ backgroundColor: item.palette?.primary, color: item.palette?.primary }} />
+                        <span className="text-[10px] font-mono opacity-50 uppercase tracking-widest">Saved Experience</span>
+                      </div>
+                      <h3 className="text-xl font-bold tracking-tight">{item.topic}</h3>
+                    </div>
+                  </motion.div>
                 ))}
               </div>
             </div>

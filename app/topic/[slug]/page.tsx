@@ -350,11 +350,19 @@ function TopicContent({
         )}
         <button 
           onClick={() => {
-            const topic = schema.topic;
+            if (!schema) return;
+            const topicData = {
+              topic: schema.topic,
+              palette: schema.palette,
+              image: summary?.thumbnail?.source,
+              slug: slug
+            };
             const saved = localStorage.getItem("socrates_favorites");
             const favorites = saved ? JSON.parse(saved) : [];
-            if (!favorites.includes(topic)) {
-              localStorage.setItem("socrates_favorites", JSON.stringify([topic, ...favorites]));
+            const exists = favorites.find((f: any) => f.topic === schema.topic);
+
+            if (!exists) {
+              localStorage.setItem("socrates_favorites", JSON.stringify([topicData, ...favorites]));
               alert("Saved to Personal Library!");
             } else {
               alert("Already in your Library.");
