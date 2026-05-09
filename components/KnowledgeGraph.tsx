@@ -8,28 +8,27 @@ import { useEffect, useState, useRef } from "react";
 interface KnowledgeGraphProps {
   nodes: KnowledgeNode[];
   edges: KnowledgeEdge[];
+  onNodeClick?: (label: string) => void;
 }
 
-export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
+export function KnowledgeGraph({ nodes, edges, onNodeClick }: KnowledgeGraphProps) {
   const [layout, setLayout] = useState<Record<string, { x: number, y: number }>>({});
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Basic force-inspired layout logic
     const newLayout: Record<string, { x: number, y: number }> = {};
-    const radius = 250;
-    const centerX = 400; // Center in a 800px wide area
-    const centerY = 300; // Center in a 600px high area
+    const radius = 220;
+    const centerX = 400; 
+    const centerY = 300; 
 
     nodes.forEach((node, index) => {
-      const angle = (index / nodes.length) * Math.PI * 2;
+      const angle = (index / nodes.length) * Math.PI * 2 - Math.PI / 2;
       newLayout[node.id] = {
         x: centerX + Math.cos(angle) * radius,
         y: centerY + Math.sin(angle) * radius,
       };
     });
 
-    // Special case: First node (usually the topic) in the center
     if (nodes.length > 0) {
       newLayout[nodes[0].id] = { x: centerX, y: centerY };
     }
@@ -44,7 +43,7 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
           <Network className="w-8 h-8" />
         </div>
         <h3 className="text-2xl font-bold uppercase tracking-widest opacity-50">Web of Thought</h3>
-        <p className="text-sm opacity-40 font-mono tracking-tighter uppercase italic">Neural Relationship Mapping Active</p>
+        <p className="text-sm opacity-40 font-mono tracking-tighter uppercase italic text-center">Interactive Relationship Navigation Active</p>
       </div>
 
       <div className="relative w-full aspect-[4/3] max-w-4xl mx-auto bg-white/[0.02] border border-white/5 rounded-[3rem] overflow-hidden backdrop-blur-3xl shadow-2xl">
@@ -87,28 +86,32 @@ export function KnowledgeGraph({ nodes, edges }: KnowledgeGraphProps) {
                 initial={{ opacity: 0, scale: 0 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
+                whileHover={{ scale: 1.1 }}
+                className="cursor-pointer group/node"
+                onClick={() => onNodeClick?.(node.label)}
                 transition={{ 
                   type: "spring", 
                   stiffness: 260, 
                   damping: 20, 
-                  delay: index * 0.1 
+                  delay: index * 0.05 
                 }}
               >
                 <circle
                   cx={pos.x}
                   cy={pos.y}
-                  r="8"
-                  className="fill-primary shadow-[0_0_15px_var(--primary)]"
+                  r="10"
+                  className="fill-primary shadow-[0_0_20px_var(--primary)] group-hover/node:fill-white transition-colors"
                 />
                 <foreignObject
-                  x={pos.x + 15}
-                  y={pos.y - 12}
-                  width="150"
-                  height="40"
+                  x={pos.x + 18}
+                  y={pos.y - 15}
+                  width="180"
+                  height="50"
+                  className="pointer-events-none"
                 >
-                  <div className="text-[10px] font-mono font-bold text-white uppercase tracking-tighter drop-shadow-lg">
+                  <div className="text-[10px] font-mono font-bold text-white uppercase tracking-tighter drop-shadow-lg group-hover/node:text-primary transition-colors">
                     {node.label}
-                    <div className="text-[8px] opacity-40 font-normal leading-tight">{node.type}</div>
+                    <div className="text-[8px] opacity-40 font-normal leading-tight group-hover/node:opacity-100">{node.type}</div>
                   </div>
                 </foreignObject>
               </motion.g>

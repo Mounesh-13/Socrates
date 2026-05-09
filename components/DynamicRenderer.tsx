@@ -40,6 +40,7 @@ const componentMap: Record<string, React.ComponentType<any>> = {
 interface DynamicRendererProps {
   schema: UISchema;
   onMasteryUpdate?: (progress: number) => void;
+  onTopicNavigate?: (topic: string) => void;
 }
 
 export function DynamicRenderer({ schema, onMasteryUpdate }: DynamicRendererProps) {
@@ -61,11 +62,12 @@ export function DynamicRenderer({ schema, onMasteryUpdate }: DynamicRendererProp
         // Spread the component data as props, excluding 'type'
         const { type, ...props } = component;
         
-        // Pass onMasteryUpdate to components that support it
+        // Pass callbacks to components that support them
         const componentProps = {
           ...props,
           ...(type === 'hero' ? { aura: schema.aura } : {}),
-          ...(type === 'quiz' || type === 'flashcard_deck' ? { onMasteryUpdate } : {})
+          ...(type === 'quiz' || type === 'flashcard_deck' ? { onMasteryUpdate } : {}),
+          ...(type === 'knowledge_graph' ? { onNodeClick: onTopicNavigate } : {})
         };
 
         return (

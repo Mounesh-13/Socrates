@@ -16,6 +16,8 @@ Unlike traditional educational tools that follow a rigid layout, Socrates operat
 - **Experience Remixing:** Ask Socrates to "Explain like I'm 5" or "Deep dive for an expert," and the entire UI re-architects itself instantly.
 - **Neural Palettes:** The AI generates custom color schemes for every topic, ensuring the visual "mood" matches the subject matter.
 - **Neural Navigation:** Tell Socrates to "Show me the quiz" or "Go to the timeline," and the UI will automatically scroll you to the right section.
+- **Universal Neural Search:** A high-speed discovery overlay (Cmd+K) that allows you to jump between topics from anywhere.
+- **Interactive Knowledge Web:** Click on any node in the Knowledge Graph to instantly re-architect the encyclopedia for that related concept.
 - **Universal Translation:** Instantly re-synthesize the entire educational experience into any language.
 
 ### 🎭 Adaptive UI Components
