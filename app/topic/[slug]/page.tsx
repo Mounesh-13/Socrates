@@ -12,7 +12,7 @@ import { CopilotKit, useCopilotReadable, useCopilotAction } from "@copilotkit/re
 import { CopilotSidebar } from "@copilotkit/react-ui";
 import { stripHtml } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
-import { Share2, Bookmark, Languages, Sparkles, Zap, Mic, MicOff } from "lucide-react";
+import { Share2, Bookmark, Languages, Sparkles, Zap, Mic, MicOff, RefreshCw, Twitter } from "lucide-react";
 import "@copilotkit/react-ui/styles.css";
 
 export default function TopicPage() {
@@ -292,15 +292,41 @@ function TopicContent({
     );
   }
 
+  const cycleTheme = () => {
+    if (!schema) return;
+    const themes: Theme[] = ['cosmic', 'parchment-dark', 'cinematic', 'neon-performance', 'futuristic', 'paper-minimal', 'brutalist'];
+    const currentIndex = themes.indexOf(schema.theme);
+    const nextIndex = (currentIndex + 1) % themes.length;
+    setSchema({ ...schema, theme: themes[nextIndex] });
+  };
+
+  const shareToTwitter = () => {
+    const text = `Just explored "${schema?.topic}" on Socrates! The Neural Architect built an incredible interactive experience for me. Check it out:`;
+    const url = window.location.href;
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+  };
+
   return (
     <main className="bg-black text-white selection:bg-white selection:text-black relative">
-      <NeuralBackground color={schema.palette?.primary} />
+      <NeuralBackground color={schema?.palette?.primary} />
       
       {/* Neural Hub - Floating Action Menu */}
       <div className="fixed bottom-8 right-8 z-[70] flex flex-col items-end space-y-4">
         <AnimatePresence>
           {showHub && (
             <div className="flex flex-col items-end space-y-3 mb-2">
+              <HubButton 
+                icon={RefreshCw} 
+                label="Cycle Theme" 
+                onClick={cycleTheme} 
+                color="bg-orange-600"
+              />
+              <HubButton 
+                icon={Twitter} 
+                label="Share on X" 
+                onClick={shareToTwitter} 
+                color="bg-sky-500"
+              />
               <HubButton 
                 icon={Sparkles} 
                 label="Remix Experience" 
@@ -318,14 +344,14 @@ function TopicContent({
                 label="Save Library" 
                 onClick={() => {
                   const topicData = {
-                    topic: schema.topic,
-                    palette: schema.palette,
-                    image: wikiUrl.includes('wikipedia') ? null : undefined, // simplify for now or handle summary in props
+                    topic: schema?.topic,
+                    palette: schema?.palette,
+                    image: wikiUrl.includes('wikipedia') ? null : undefined,
                     slug: window.location.pathname.split('/').pop()
                   };
                   const saved = localStorage.getItem("socrates_favorites");
                   const favorites = saved ? JSON.parse(saved) : [];
-                  if (!favorites.find((f:any) => f.topic === schema.topic)) {
+                  if (!favorites.find((f:any) => f.topic === schema?.topic)) {
                     localStorage.setItem("socrates_favorites", JSON.stringify([topicData, ...favorites]));
                     alert("Saved to Personal Library!");
                   }
