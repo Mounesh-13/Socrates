@@ -29,6 +29,7 @@ Available components:
 - knowledge_graph: { type: 'knowledge_graph', nodes: { id: string, label: string, type: 'concept'|'person'|'event'|'place' }[], edges: { from: string, to: string, label?: string }[] } // Visualize relationships. Always make the main topic the first node (id: 'root').
 - pathway: { type: 'pathway', items: { step: string, title: string, description: string }[] } // Suggest a 3-step structured learning journey for the user to follow.
 - media: { type: 'media', items: { type: 'video'|'audio', provider: 'youtube'|'spotify', url: string, title?: string }[] } // Embed educational videos (YouTube ID) or music/podcasts (Spotify ID).
+- chart: { type: 'chart', title: string, chartType: 'bar'|'area', data: { label: string, value: number }[] } // Visualize quantitative data (e.g., dates/values, properties/amounts). Use 'area' for trends, 'bar' for comparisons.
 - related_topics: { type: 'related_topics', topics: string[] }
 
 Themes:

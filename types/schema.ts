@@ -58,6 +58,11 @@ export interface MediaItem {
   title?: string;
 }
 
+export interface ChartData {
+  label: string;
+  value: number;
+}
+
 export type ComponentData = 
   | { type: 'hero'; title: string; subtitle: string; theme: Theme; imageUrl?: string }
   | { type: 'timeline'; events: TimelineEvent[] }
@@ -72,6 +77,7 @@ export type ComponentData =
   | { type: 'knowledge_graph'; nodes: KnowledgeNode[]; edges: KnowledgeEdge[] }
   | { type: 'pathway'; items: PathwayItem[] }
   | { type: 'media'; items: MediaItem[] }
+  | { type: 'chart'; title: string; chartType: 'bar' | 'area'; data: ChartData[] }
   | { type: 'related_topics'; topics: string[] };
 
 export interface UISchema {
