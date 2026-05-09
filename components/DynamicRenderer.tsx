@@ -56,6 +56,7 @@ export function DynamicRenderer({ schema, onMasteryUpdate }: DynamicRendererProp
         // Pass onMasteryUpdate to components that support it
         const componentProps = {
           ...props,
+          ...(type === 'hero' ? { aura: schema.aura } : {}),
           ...(type === 'quiz' || type === 'flashcard_deck' ? { onMasteryUpdate } : {})
         };
 

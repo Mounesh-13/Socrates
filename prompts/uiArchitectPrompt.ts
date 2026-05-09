@@ -45,6 +45,7 @@ For each topic:
 - choose theme
 - generate concise educational content
 - provide 'palette': { primary, secondary, accent } in HEX format. Choose colors that give the topic a unique and appropriate "vibe". Ensure readability.
+- provide 'aura': { keywords: string[], sentiment: 'hopeful'|'dark'|'analytical'|'epic'|'minimal' }. Describe the "soul" of the topic in 3 keywords.
 - provide 'architectNotes': a brief (1-2 sentence) technical rationale for your design choices.
 
 Structure your response as follows:
@@ -52,6 +53,7 @@ Structure your response as follows:
   "topic": "Topic Name",
   "theme": "chosen-theme",
   "palette": { "primary": "#...", "secondary": "#...", "accent": "#..." },
+  "aura": { "keywords": ["...", "...", "..."], "sentiment": "..." },
   "architectNotes": "...",
   "components": [
     { "type": "hero", ... },

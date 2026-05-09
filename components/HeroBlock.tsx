@@ -9,6 +9,10 @@ interface HeroBlockProps {
   subtitle: string;
   theme: Theme;
   imageUrl?: string;
+  aura?: {
+    keywords: string[];
+    sentiment: string;
+  };
 }
 
 const themeStyles: Record<Theme, string> = {
@@ -21,14 +25,30 @@ const themeStyles: Record<Theme, string> = {
   brutalist: "bg-orange-500",
 };
 
-export function HeroBlock({ title, subtitle, theme, imageUrl }: HeroBlockProps) {
+export function HeroBlock({ title, subtitle, theme, imageUrl, aura }: HeroBlockProps) {
   return (
     <section
       className={cn(
-        "relative h-[80vh] flex flex-col items-center justify-center overflow-hidden px-6",
+        "relative h-[90vh] flex flex-col items-center justify-center overflow-hidden px-6",
         themeStyles[theme]
       )}
     >
+      {/* Dynamic Aura Glow */}
+      {aura && (
+        <div className="absolute inset-0 pointer-events-none">
+          <motion.div 
+            animate={{ 
+              scale: [1, 1.1, 1],
+              opacity: [0.3, 0.5, 0.3]
+            }}
+            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[80vw] rounded-full blur-[120px]"
+            style={{ 
+              background: `radial-gradient(circle, var(--primary) 0%, transparent 70%)` 
+            }}
+          />
+        </div>
+      )}
       {/* Background Image */}
       {imageUrl && (
         <div className="absolute inset-0 z-0 overflow-hidden">
@@ -62,11 +82,22 @@ export function HeroBlock({ title, subtitle, theme, imageUrl }: HeroBlockProps) 
           {title}
         </h1>
         <p className={cn(
-          "text-xl md:text-2xl opacity-80 max-w-2xl mx-auto leading-relaxed",
+          "text-xl md:text-2xl opacity-80 max-w-2xl mx-auto leading-relaxed mb-8",
           theme === "brutalist" ? "font-mono bg-black text-white p-2 mt-4" : "text-foreground"
         )}>
           {subtitle}
         </p>
+
+        {/* Aura Keywords */}
+        {aura && (
+          <div className="flex justify-center space-x-4">
+            {aura.keywords.map((word, i) => (
+              <span key={i} className="text-[10px] font-mono uppercase tracking-[0.4em] opacity-40 py-1 px-3 border border-white/5 rounded-full">
+                {word}
+              </span>
+            ))}
+          </div>
+        )}
       </motion.div>
 
       <motion.div

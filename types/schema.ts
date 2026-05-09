@@ -67,6 +67,10 @@ export interface UISchema {
     secondary: string;
     accent: string;
   };
+  aura?: {
+    keywords: string[];
+    sentiment: 'hopeful' | 'dark' | 'analytical' | 'epic' | 'minimal';
+  };
   components: ComponentData[];
   architectNotes?: string;
 }
